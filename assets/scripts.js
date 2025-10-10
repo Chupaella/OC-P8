@@ -1,3 +1,17 @@
+function applyWebpFallback() {
+    if (!document.documentElement.classList.contains('no-webp')) {
+        return;
+    }
+    document.querySelectorAll('img[data-fallback-src]').forEach(function (img) {
+        var fallback = img.getAttribute('data-fallback-src');
+        if (fallback && img.getAttribute('src') !== fallback) {
+            img.setAttribute('src', fallback);
+        }
+    });
+}
+
+document.addEventListener('DOMContentLoaded', applyWebpFallback);
+
 $(document).ready(function() {
     $('.gallery').mauGallery({
         columns: {
@@ -12,4 +26,5 @@ $(document).ready(function() {
         showTags: true,
         tagsPosition: 'top'
     });
+    applyWebpFallback();
 });
